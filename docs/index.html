@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/main.css">
     <title>Document</title>
 </head>
-
 <body>
     <section>
         <nav>
@@ -20,20 +19,22 @@
                     <label for="longitude">Долгота</label>
                     <input type="number" name="longitude" id="longitude" step="0.01">
                     <button id="get-data">Ok</button>
-                    <br />
-                    <input type="text" list="citys" id="citys-body" />
-                    <datalist id="citys"></datalist>
                 </position>
             </div>
             <div>
                 <button id="clear">Стереть</button>
                 <button id="run">Запуск</button>
-                <button id="run">Вперед</button>
+                <button id="test">Вперед</button>
             </div>
         </nav>
-        <canvas id="canva" width="1200" height="600"></canvas>
+        <div class="plotter">
+            <canvas id="canva" width="1200" height="600"></canvas>
+            <label for="frame-selector" id="time-display">00:00</label>
+            <input type="range" name="" id="frame-selector" value="0" step="1" min="0">
+        </div>
     </section>
 </body>
-<script src="./js/lib/skymap.js"></script>
+<script src="./js/lib/plotter.js"></script>
 <script src="./js/app.js"></script>
+
 </html>

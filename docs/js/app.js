@@ -4,7 +4,7 @@ const options = {
 };
 
 let plotter = new Plotter.Map(options);
-
+let dataSet = null;
 document.addEventListener("DOMContentLoaded", function (event) {
     let curentDate = new Date();
     let latitude = 55.95;
@@ -19,13 +19,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let latitudeInput = document.getElementById('get-data');
     latitudeInput.onclick = calc;
 
-    let citys = document.getElementById('citys-body');
-    citys.onkeyup = citySelector;
+    let testButton = document.getElementById('test');
+    testButton.onclick = test;
+
+    var frameSelector = document.getElementById('frame-selector');
+    frameSelector.oninput = test;
 
     document.getElementById('latitude').value = latitude;
     document.getElementById('longitude').value = longitude;
 
-    dateUpdate(curentDate);
+    document.getElementById('date').value = dateToString(curentDate);
+
     getData(curentDate, latitude, longitude);
 });
 
@@ -48,19 +52,13 @@ function getData(date, latitude, longitude) {
 }
 
 function dataFetched(data) {
+    dataSet = data;
+    document.getElementById('frame-selector').setAttribute("max", data.length - 1);
     plotter.ClearMap();
     plotter.UpdateDataset = data;
-}
-
-function dateUpdate(date) {
-    let dateInput = document.getElementById('date');
-    let monthStr = date.getMonth() >= 9 ? date.getMonth() + 1 : `0${date.getMonth()+1}`
-    let dateStr = date.getDate() >= 9 ? date.getDate() : `0${date.getDate()}`
-    // let hourStr = date.getHours() >= 9 ? date.getHours() : `0${date.getHours()}`
-    // let minuteStr = date.getMinutes() >= 9 ? date.getMinutes() : `0${date.getMinutes()}`
-
-    let strDate = `${date.getFullYear()}-${monthStr}-${dateStr}` //T${hourStr}:${minuteStr}`
-    dateInput.value = strDate;
+    const id = data.map(x=> timeToString(new Date(x.time)).substring(0,4)).indexOf(timeToString(new Date()).substring(0,4));
+    document.getElementById('frame-selector').value = id;
+    document.getElementById('time-display').innerText = timeToString(new Date(dataSet[id].time));
 }
 
 function calc() {
@@ -68,34 +66,26 @@ function calc() {
     let longitude = document.getElementById('longitude').value;
     let date = document.getElementById('date').value;
     getData(new Date(date), latitude, longitude);
-
 }
 
-function citySelector(text) {
-    let a = text.target.value;
-    if (a.length < 3) {
-        return;
-    }
-    setTimeout(() => {
-        fetch(`https://nominatim.openstreetmap.org/search/${a}?format=json&addressdetails=1`)
-            .then(response => response.json())
-            .then(data => townFetched(data));
-    }, 1500);
+function test(e) {
+    const date = new Date(dataSet[e.target.value].time);
+    plotter.DataFrameSelect(e.target.value);
+    document.getElementById('time-display').innerText = timeToString(date);
 }
 
-function townFetched(data) {
-    console.log(data)
-    let c = data.map(x => ({
-        class: x.class,
-        city: x.address.city,
-        country: x.address.country,
-        lat: x.lat,
-        lon: x.lon
-    }));
-    let opt = c.map((x) => `<option value="${x.country}, ${x.city}">`).join('');
-    console.log(c)
-    // let eblo = document.createElement('option');
-    // eblo.value = "wwwwww";
-    // document.getElementById('citys').appendChild(eblo);
-    document.getElementById('citys').innerHTML = opt;
+function dateToString(date, ) {
+    let monthStr = date.getMonth() >= 9 ? date.getMonth() + 1 : `0${date.getMonth()+1}`
+    let dateStr = date.getDate() >= 9 ? date.getDate() : `0${date.getDate()}`
+
+    let strDate = `${date.getFullYear()}-${monthStr}-${dateStr}`;
+    return strDate;
+}
+
+function timeToString(date) {
+    let hoursStr = date.getHours() >= 10 ? date.getHours(): `0${date.getHours()}`
+    let dateStr = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
+
+    let strDate = `${hoursStr}:${dateStr}`;
+    return strDate;
 }

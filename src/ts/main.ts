@@ -8,7 +8,7 @@ namespace Plotter {
     }
     export class Map {
         private readonly _grid: Grid;
-        private _skyInfo: Array<DrawObjectFrame> | null = null;
+        private _frames: Array<DrawObjectFrame> | null = null;
         private _motionIndex: number = 0;
         private _i: number = 0;
 
@@ -17,8 +17,8 @@ namespace Plotter {
         }
 
         private get NextObject(): DrawObjectFrame | null {
-            if (this._skyInfo == null || this._motionIndex > this._skyInfo.length) return null;
-            return this._skyInfo[this._motionIndex++];
+            if (this._frames == null || this._motionIndex > this._frames.length) return null;
+            return this._frames[this._motionIndex++];
         }
 
         public ClearMap() {
@@ -43,9 +43,24 @@ namespace Plotter {
             }, 150);
         }
 
+        public DataFrameSelect(frameId: number) {
+            if (isNaN(Number(frameId))) {
+                throw new Error(`FrameId mast be integer!`)
+            }
+
+            const id = Number(frameId);
+
+            if (id > this._frames!.length - 1) {
+                throw new Error(`Frame with id ${frameId} no found.`);
+            }
+            this._grid.Clear();
+            this._grid.DrawGrid();
+            this._grid.DrawPlanetCollection(this._frames![frameId].SkyObjects);
+        }
+
         public set UpdateDataset(objects: Array<IDrawObjects>) {
-            this._skyInfo = objects.map(obj => new DrawObjectFrame(obj));
-            this._grid.DrawPlanetCollection(this._skyInfo[0].SkyObjects);
+            this._frames = objects.map(obj => new DrawObjectFrame(obj));
+            this._grid.DrawPlanetCollection(this._frames[0].SkyObjects);
         }
     }
 }
