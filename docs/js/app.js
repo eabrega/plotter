@@ -46,7 +46,8 @@ function run() {
 }
 
 function getData(date, latitude, longitude) {
-    fetch(`https://astronav.ru/condition/date/${date.getDate()}-${date.getMonth()}-${date.getFullYear()}/latitude/${latitude}/longitude/${longitude}`)
+    console.log()
+    fetch(`https://astronav.ru/condition/date/${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}/latitude/${latitude}/longitude/${longitude}`)
         .then(response => response.json())
         .then(data => dataFetched(data));
 }
@@ -54,11 +55,13 @@ function getData(date, latitude, longitude) {
 function dataFetched(data) {
     dataSet = data;
     document.getElementById('frame-selector').setAttribute("max", data.length - 1);
-    plotter.ClearMap();
-    plotter.UpdateDataset = data;
-    const id = data.map(x=> timeToString(new Date(x.time)).substring(0,4)).indexOf(timeToString(new Date()).substring(0,4));
+    
+    const id = data.map(x => timeToString(new Date(x.time)).substring(0, 4)).indexOf(timeToString(new Date()).substring(0, 4));
     document.getElementById('frame-selector').value = id;
     document.getElementById('time-display').innerText = timeToString(new Date(dataSet[id].time));
+    
+    plotter.UpdateDataset = data;
+    plotter.DataFrameSelect(id);
 }
 
 function calc() {
@@ -74,8 +77,8 @@ function test(e) {
     document.getElementById('time-display').innerText = timeToString(date);
 }
 
-function dateToString(date, ) {
-    let monthStr = date.getMonth() >= 9 ? date.getMonth() + 1 : `0${date.getMonth()+1}`
+function dateToString(date) {
+    let monthStr = date.getMonth() >= 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
     let dateStr = date.getDate() >= 9 ? date.getDate() : `0${date.getDate()}`
 
     let strDate = `${date.getFullYear()}-${monthStr}-${dateStr}`;
@@ -83,7 +86,7 @@ function dateToString(date, ) {
 }
 
 function timeToString(date) {
-    let hoursStr = date.getHours() >= 10 ? date.getHours(): `0${date.getHours()}`
+    let hoursStr = date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`
     let dateStr = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
 
     let strDate = `${hoursStr}:${dateStr}`;
