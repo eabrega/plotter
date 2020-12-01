@@ -1,13 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "strict": true,
-        "sourceMap": true,
-        "removeComments": true,
-        "outDir": "../../docs/js/lib/",
-        "outFile": "../../docs/js/lib/plotter.js",
-        "rootDir": "",
-        "allowSyntheticDefaultImports" : true,
-        "pretty": true,
-    }
+  "compilerOptions": {
+    "target": "es6",
+    "declaration": true,
+    "strict": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "outDir": "../../dist/",
+    "rootDir": "",
+    "pretty": true
+  }
 }

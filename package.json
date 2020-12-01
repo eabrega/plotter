@@ -1,0 +1,30 @@
+{
+    "name": "canvas-chart-ts",
+    "version": "0.0.4",
+    "main": "dist/main.ts",
+    "files": [
+        "dist/*"
+    ],
+    "description": "Easy chart plotter",
+    "author": {
+        "name": "Evgeny Brega",
+        "email": "eabrega@gmail.com",
+        "url": "https://github.com/eabrega/"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eabrega/plotter.git"
+    },
+    "homepage": "https://eabrega.github.io/plotter/",
+    "keywords": [
+        "chart",
+        "plotter",
+        "graph",
+        "canvas",
+        "typescript",
+        "library",
+        "html5",
+        "web"
+    ]
+}
