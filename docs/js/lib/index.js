@@ -1,5 +1,5 @@
-import { Grid } from './grid';
-import { DrawObjectFrame } from './drawObjectsFrame';
+import { Grid } from './grid.js';
+import { DrawObjectFrame } from './drawObjectsFrame.js';
 export class Plotter {
     constructor(options) {
         this._frames = null;
@@ -48,4 +48,3 @@ export class Plotter {
         this._grid.DrawPlanetCollection(this._frames[0].SkyObjects);
     }
 }
-//# sourceMappingURL=index.js.map

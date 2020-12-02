@@ -19,4 +19,3 @@ export class DrawObject {
         return false;
     }
 }
-//# sourceMappingURL=drawObject.js.map

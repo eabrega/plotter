@@ -1,4 +1,4 @@
-import { DrawObject } from './drawObject';
+import { DrawObject } from './drawObject.js';
 export class DrawObjectFrame {
     constructor(skyInfo) {
         this._dateTime = skyInfo.time;
@@ -11,4 +11,3 @@ export class DrawObjectFrame {
         return this._dateTime;
     }
 }
-//# sourceMappingURL=drawObjectsFrame.js.map

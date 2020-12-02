@@ -1,9 +1,11 @@
+import { Plotter } from './lib/index.js'
+
 const options = {
     cellSizeX: 10,
     cellSizeY: 5
 };
 
-let plotter = new Plotter.Map(options);
+let plotter = new Plotter(options);
 let dataSet = null;
 document.addEventListener("DOMContentLoaded", function (event) {
     let curentDate = new Date();
