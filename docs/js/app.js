@@ -49,7 +49,7 @@ function run() {
 
 function getData(date, latitude, longitude) {
     console.log()
-    fetch(`https://astronav.ru/condition/date/${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}/latitude/${latitude}/longitude/${longitude}`)
+    fetch(`https://api.astronav.ru/condition/date/${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}/gmt/-180/latitude/${latitude}/longitude/${longitude}`)
         .then(response => response.json())
         .then(data => dataFetched(data));
 }
